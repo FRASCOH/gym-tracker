@@ -80,7 +80,7 @@ export async function getUserPlans(userId, programType = 'invictus') {
     .from('workout_plans')
     .select('*, plan_exercises(*)')
     .eq('user_id', userId)
-    .eq('program_type', programType)
+    .in('program_type', [programType, 'cardio'])
     .order('sort_order');
 
   if (data) {

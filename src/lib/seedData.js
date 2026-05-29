@@ -766,52 +766,242 @@ const SCHEDA_C_CORPO_LIBERO = {
   ],
 };
 
+// ============================================
+// Schede Cardio (Brucia Calorie & Resistenza)
+// ============================================
+const CARDIO_NO_EQUIPMENT = {
+  name: 'Cardio (A Corpo Libero)',
+  description: 'HIIT • Brucia Calorie • Senza Attrezzi (30m)',
+  sort_order: 10,
+  exercises: [
+    {
+      exercise_name: 'Corsa sul posto (Riscaldamento)',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 0,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 180, max_reps: 180, weight_offset: 0, note: '3 minuti di corsa leggera sul posto' },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Jumping Jacks',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 15,
+      sort_order: 1,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 45, max_reps: 45, weight_offset: 0, note: '45 secondi di lavoro, 15s recupero' },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Mountain Climbers',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 15,
+      sort_order: 2,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 45, max_reps: 45, weight_offset: 0, note: '45 secondi di lavoro, 15s recupero' },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Squat Jumps',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 15,
+      sort_order: 3,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 45, max_reps: 45, weight_offset: 0, note: '45 secondi di lavoro, 15s recupero' },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Burpees',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 15,
+      sort_order: 4,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 45, max_reps: 45, weight_offset: 0, note: '45 secondi di lavoro, 15s recupero' },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Plank Jacks',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 15,
+      sort_order: 5,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 45, max_reps: 45, weight_offset: 0, note: '45 secondi di lavoro. Esegui il circuito per 3 Round!' },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+          { min_reps: 45, max_reps: 45, weight_offset: 0 },
+        ],
+      },
+    },
+  ],
+};
+
+const CARDIO_BOXING_ROPE = {
+  name: 'Cardio (Corda & Sacco)',
+  description: 'Pugilato HIIT • Corda + Sacco da Boxe (30m)',
+  sort_order: 11,
+  exercises: [
+    {
+      exercise_name: 'Riscaldamento corda',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 0,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 180, max_reps: 180, weight_offset: 0, note: '3 round x 3 min di salti corda' },
+          { min_reps: 180, max_reps: 180, weight_offset: 0 },
+          { min_reps: 180, max_reps: 180, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Sacco da boxe combinazioni',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 1,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 180, max_reps: 180, weight_offset: 0, note: '3 round x 3 min: jab, cross, ganci + movimento' },
+          { min_reps: 180, max_reps: 180, weight_offset: 0 },
+          { min_reps: 180, max_reps: 180, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Shadow Boxing / Finisher',
+      muscle_group: 'Cardio',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 2,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 180, max_reps: 180, weight_offset: 0, note: '2 round x 3 min a ritmo sostenuto' },
+          { min_reps: 180, max_reps: 180, weight_offset: 0 },
+        ],
+      },
+    },
+  ],
+};
+
 export const INVICTUS_PLANS = [SCHEDA_A, SCHEDA_B, SCHEDA_C];
 export const CORPO_LIBERO_PLANS = [SCHEDA_A_CORPO_LIBERO, SCHEDA_B_CORPO_LIBERO, SCHEDA_C_CORPO_LIBERO];
+export const CARDIO_PLANS = [CARDIO_NO_EQUIPMENT, CARDIO_BOXING_ROPE];
 
 /**
  * Seeds the user's workout plans into Supabase if they don't have any for the given program type.
  */
 export async function seedUserPlans(userId, programType = 'invictus') {
-  // Check if user already has plans for this program type
-  const { data: existing } = await getUserPlans(userId, programType);
-  if (existing && existing.length > 0) {
-    return existing;
+  const plans = [];
+
+  // 1. Seed active program plans
+  const { data: existingActive } = await getUserPlans(userId, programType);
+  const activeNeedsSeed = !existingActive || existingActive.filter(p => p.program_type === programType).length === 0;
+
+  if (activeNeedsSeed) {
+    const sourcePlans = programType === 'corpolibero' ? CORPO_LIBERO_PLANS : INVICTUS_PLANS;
+    for (const planData of sourcePlans) {
+      const { exercises, ...planFields } = planData;
+      const { data: plan, error: planError } = await createPlan({
+        ...planFields,
+        user_id: userId,
+        program_type: programType,
+      });
+
+      if (planError) {
+        console.error('Error creating plan:', planError);
+        continue;
+      }
+
+      const exerciseRows = exercises.map((ex) => ({
+        ...ex,
+        plan_id: plan.id,
+        sets_config: ex.sets_config,
+        superset_exercises: ex.superset_exercises || null,
+      }));
+
+      const { data: createdExercises, error: exError } = await createPlanExercises(exerciseRows);
+      if (exError) console.error('Error creating exercises:', exError);
+
+      plans.push({ ...plan, plan_exercises: createdExercises });
+    }
+  } else {
+    plans.push(...existingActive.filter(p => p.program_type === programType));
   }
 
-  const plans = [];
-  const sourcePlans = programType === 'corpolibero' ? CORPO_LIBERO_PLANS : INVICTUS_PLANS;
+  // 2. Seed cardio plans if needed
+  const cardioNeedsSeed = !existingActive || existingActive.filter(p => p.program_type === 'cardio').length === 0;
 
-  for (const planData of sourcePlans) {
-    const { exercises, ...planFields } = planData;
+  if (cardioNeedsSeed) {
+    for (const planData of CARDIO_PLANS) {
+      const { exercises, ...planFields } = planData;
+      const { data: plan, error: planError } = await createPlan({
+        ...planFields,
+        user_id: userId,
+        program_type: 'cardio',
+      });
 
-    // Create the plan
-    const { data: plan, error: planError } = await createPlan({
-      ...planFields,
-      user_id: userId,
-      program_type: programType,
-    });
+      if (planError) {
+        console.error('Error creating cardio plan:', planError);
+        continue;
+      }
 
-    if (planError) {
-      console.error('Error creating plan:', planError);
-      continue;
+      const exerciseRows = exercises.map((ex) => ({
+        ...ex,
+        plan_id: plan.id,
+        sets_config: ex.sets_config,
+        superset_exercises: ex.superset_exercises || null,
+      }));
+
+      const { data: createdExercises, error: exError } = await createPlanExercises(exerciseRows);
+      if (exError) console.error('Error creating exercises:', exError);
+
+      plans.push({ ...plan, plan_exercises: createdExercises });
     }
-
-    // Create the exercises for this plan
-    const exerciseRows = exercises.map((ex) => ({
-      ...ex,
-      plan_id: plan.id,
-      sets_config: ex.sets_config,
-      superset_exercises: ex.superset_exercises || null,
-    }));
-
-    const { data: createdExercises, error: exError } = await createPlanExercises(exerciseRows);
-
-    if (exError) {
-      console.error('Error creating exercises:', exError);
-    }
-
-    plans.push({ ...plan, plan_exercises: createdExercises });
+  } else {
+    plans.push(...existingActive.filter(p => p.program_type === 'cardio'));
   }
 
   return plans;
@@ -822,6 +1012,8 @@ export async function seedUserPlans(userId, programType = 'invictus') {
  */
 export function getNextPlanIndex(lastPlanSortOrder) {
   if (lastPlanSortOrder === null || lastPlanSortOrder === undefined) return 0;
+  // Make sure we only rotate A, B, C (sort_order 0, 1, 2)
+  if (lastPlanSortOrder >= 10) return 0; // If they did cardio, suggest A
   return (lastPlanSortOrder + 1) % 3;
 }
 
@@ -834,6 +1026,7 @@ export const MUSCLE_GROUP_COLORS = {
   Gambe: { bg: 'rgba(34, 211, 153, 0.12)', text: '#34d399' },
   Spalle: { bg: 'rgba(251, 191, 36, 0.12)', text: '#fbbf24' },
   Dorso: { bg: 'rgba(34, 211, 238, 0.12)', text: '#22d3ee' },
+  Cardio: { bg: 'rgba(236, 72, 153, 0.12)', text: '#ec4899' },
 };
 
 /**
@@ -843,4 +1036,6 @@ export const PLAN_COLORS = {
   'Scheda A': { gradient: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', emoji: '🏋️' },
   'Scheda B': { gradient: 'linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%)', emoji: '💪' },
   'Scheda C': { gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)', emoji: '🔥' },
+  'Cardio (A Corpo Libero)': { gradient: 'linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)', emoji: '🏃' },
+  'Cardio (Corda & Sacco)': { gradient: 'linear-gradient(135deg, #a855f7 0%, #6366f1 100%)', emoji: '🥊' },
 };
