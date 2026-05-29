@@ -1039,3 +1039,9 @@ export const PLAN_COLORS = {
   'Cardio (A Corpo Libero)': { gradient: 'linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)', emoji: '🏃' },
   'Cardio (Corda & Sacco)': { gradient: 'linear-gradient(135deg, #a855f7 0%, #6366f1 100%)', emoji: '🥊' },
 };
+
+export function formatPlanTitle(name) {
+  if (name === 'Cardio (A Corpo Libero)') return 'Corpo Libero';
+  if (name === 'Cardio (Corda & Sacco)') return 'Corda e Sacco';
+  return name;
+}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Calendar, Clock, Dumbbell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getUserSessions, getSessionSets } from '../lib/supabase';
-import { PLAN_COLORS } from '../lib/seedData';
+import { PLAN_COLORS, formatPlanTitle } from '../lib/seedData';
 
 export default function History() {
   const { user } = useAuth();
@@ -99,7 +99,7 @@ export default function History() {
                     {planColor?.emoji || '🏋️'}
                   </div>
                   <div className="history-details">
-                    <div className="history-plan-name">{planName.replace(/\s*\(.*\)/, '')}</div>
+                    <div className="history-plan-name">{formatPlanTitle(planName)}</div>
                     <div className="history-date" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                       <Calendar size={12} />
                       {new Date(session.started_at).toLocaleDateString('it-IT', {

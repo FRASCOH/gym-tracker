@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Play, ChevronRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getUserPlans, getProfile } from '../lib/supabase';
-import { seedUserPlans, MUSCLE_GROUP_COLORS, PLAN_COLORS } from '../lib/seedData';
+import { seedUserPlans, MUSCLE_GROUP_COLORS, PLAN_COLORS, formatPlanTitle } from '../lib/seedData';
 import { getProgressionInfo } from '../lib/progression';
 
 export default function Plans() {
@@ -115,7 +115,7 @@ export default function Plans() {
                     >
                       {plan.name.replace('Scheda ', '').replace(/\s*\(.*\)/, '')}
                     </div>
-                    <div style={{ fontSize: '1.125rem', fontWeight: 700 }}>{plan.name.replace(/\s*\(.*\)/, '')}</div>
+                    <div style={{ fontSize: '1.125rem', fontWeight: 700 }}>{formatPlanTitle(plan.name)}</div>
                     <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 2 }}>
                       {plan.description}
                     </div>
@@ -231,7 +231,7 @@ export default function Plans() {
                     style={{ marginTop: 8 }}
                   >
                     <Play size={18} />
-                    Inizia {plan.name.replace(/\s*\(.*\)/, '')}
+                    Inizia {formatPlanTitle(plan.name)}
                   </button>
                 </div>
               )}

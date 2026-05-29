@@ -20,7 +20,7 @@ import {
   upsertProfile,
   signOut,
 } from '../lib/supabase';
-import { seedUserPlans, getNextPlanIndex, PLAN_COLORS } from '../lib/seedData';
+import { seedUserPlans, getNextPlanIndex, PLAN_COLORS, formatPlanTitle } from '../lib/seedData';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -259,7 +259,7 @@ export default function Dashboard() {
                   marginTop: 4,
                 }}
               >
-                {nextPlan.name.replace(/\s*\(.*\)/, '')}
+                {formatPlanTitle(nextPlan.name)}
               </p>
               <p style={{ fontSize: '0.875rem', opacity: 0.85, marginTop: 2 }}>
                 {nextPlan.description}
@@ -400,7 +400,7 @@ export default function Dashboard() {
                     {planColor?.emoji || '🏋️'}
                   </div>
                   <div className="history-details">
-                    <div className="history-plan-name">{planName.replace(/\s*\(.*\)/, '')}</div>
+                    <div className="history-plan-name">{formatPlanTitle(planName)}</div>
                     <div className="history-date">
                       {new Date(session.started_at).toLocaleDateString('it-IT', {
                         weekday: 'short',

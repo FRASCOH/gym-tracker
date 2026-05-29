@@ -12,7 +12,7 @@ import {
   getProfile,
 } from '../lib/supabase';
 import { calculateNextProgression } from '../lib/progression';
-import { seedUserPlans, PLAN_COLORS } from '../lib/seedData';
+import { seedUserPlans, PLAN_COLORS, formatPlanTitle } from '../lib/seedData';
 import ExerciseCard from '../components/ExerciseCard';
 import Timer from '../components/Timer';
 
@@ -282,7 +282,7 @@ export default function ActiveWorkout() {
                     >
                       {plan.name.replace('Scheda ', '').replace(/\s*\(.*\)/, '')}
                     </div>
-                    <div style={{ fontWeight: 700 }}>{plan.name.replace(/\s*\(.*\)/, '')}</div>
+                    <div style={{ fontWeight: 700 }}>{formatPlanTitle(plan.name)}</div>
                     <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
                       {plan.description} • {plan.plan_exercises?.length || 0} esercizi
                     </div>
@@ -306,7 +306,7 @@ export default function ActiveWorkout() {
       <div className="page-header animate-fade-in-up">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <h1 className="page-title">{selectedPlan?.name.replace(/\s*\(.*\)/, '') || 'Allenamento'}</h1>
+            <h1 className="page-title">{selectedPlan ? formatPlanTitle(selectedPlan.name) : 'Allenamento'}</h1>
             <p className="page-subtitle">{selectedPlan?.description}</p>
           </div>
           {isWorkoutActive && (
