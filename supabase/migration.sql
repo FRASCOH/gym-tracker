@@ -19,7 +19,9 @@ CREATE TABLE IF NOT EXISTS workout_plans (
   name TEXT NOT NULL,
   description TEXT,
   sort_order INT DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT now()
+  program_type TEXT DEFAULT 'invictus',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  CONSTRAINT unique_user_plan_name_type UNIQUE (user_id, name, program_type)
 );
 
 -- 3. PLAN_EXERCISES (esercizi dentro ogni scheda)
@@ -120,6 +122,18 @@ CREATE POLICY "Users manage own sets" ON session_sets
 -- Aggiunta colonne per supporto multi-programma
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS active_program TEXT DEFAULT 'invictus';
 ALTER TABLE workout_plans ADD COLUMN IF NOT EXISTS program_type TEXT DEFAULT 'invictus';
+
+-- Rimuovi duplicati (se presenti) prima di aggiungere il vincolo unico
+DELETE FROM public.workout_plans a USING public.workout_plans b
+WHERE a.id > b.id 
+  AND a.user_id = b.user_id 
+  AND a.name = b.name 
+  AND COALESCE(a.program_type, '') = COALESCE(b.program_type, '');
+
+-- Aggiungi vincolo unico
+ALTER TABLE public.workout_plans 
+  DROP CONSTRAINT IF EXISTS unique_user_plan_name_type,
+  ADD CONSTRAINT unique_user_plan_name_type UNIQUE (user_id, name, program_type);
 
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
