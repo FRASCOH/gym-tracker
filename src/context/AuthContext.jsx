@@ -11,9 +11,6 @@ export function AuthProvider({ children }) {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
-        ensureProfile(session.user);
-      }
       setLoading(false);
     });
 
@@ -22,32 +19,11 @@ export function AuthProvider({ children }) {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
-        ensureProfile(session.user);
-      }
       setLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
-
-  async function ensureProfile(user) {
-    const { data } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('id', user.id)
-      .maybeSingle();
-
-    if (!data) {
-      await upsertProfile(user.id, {
-        display_name:
-          user.user_metadata?.full_name ||
-          user.user_metadata?.name ||
-          user.email?.split('@')[0] ||
-          'Atleta',
-      });
-    }
-  }
 
   return (
     <AuthContext.Provider value={{ user, loading }}>
