@@ -313,7 +313,7 @@ body {
 .page {
   flex: 1;
   padding: 16px;
-  padding-bottom: 100px; /* space for bottom nav */
+  padding-bottom: 120px; /* space for bottom nav */
   max-width: 480px;
   margin: 0 auto;
   width: 100%;
@@ -970,7 +970,7 @@ body {
 @media (min-width: 768px) {
   .page {
     max-width: 540px;
-    padding: 24px;
+    padding: 24px 24px 120px 24px;
   }
 
   .bottom-nav {
