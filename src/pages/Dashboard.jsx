@@ -9,7 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { TrendingUp, Dumbbell, Calendar, Flame, ChevronRight } from 'lucide-react';
+import { TrendingUp, Dumbbell, Calendar, Flame, ChevronRight, Settings, LogOut, Save, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import {
   getUserPlans,
@@ -17,6 +17,8 @@ import {
   getExerciseHistory,
   getMainExerciseNames,
   getProfile,
+  upsertProfile,
+  signOut,
 } from '../lib/supabase';
 import { seedUserPlans, getNextPlanIndex, PLAN_COLORS } from '../lib/seedData';
 
@@ -32,6 +34,14 @@ export default function Dashboard() {
   const [nextPlan, setNextPlan] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Settings state
+  const [showSettings, setShowSettings] = useState(false);
+  const [displayName, setDisplayName] = useState('');
+  const [activeProgram, setActiveProgram] = useState('invictus');
+  const [defaultIncrement, setDefaultIncrement] = useState(2.5);
+  const [savingSettings, setSavingSettings] = useState(false);
+  const [settingsError, setSettingsError] = useState('');
+
   useEffect(() => {
     if (user) loadData();
   }, [user]);
@@ -45,13 +55,20 @@ export default function Dashboard() {
 
     // Load profile
     const { data: profileData } = await getProfile(user.id);
-    setProfile(profileData);
+    if (profileData) {
+      setProfile(profileData);
+      setDisplayName(profileData.display_name || '');
+      setActiveProgram(profileData.active_program || 'invictus');
+      setDefaultIncrement(Number(profileData.default_increment || 2.5));
+    }
+
+    const activeProg = profileData?.active_program || 'invictus';
 
     // Seed plans if needed
     let userPlans = [];
-    const { data: existingPlans } = await getUserPlans(user.id);
+    const { data: existingPlans } = await getUserPlans(user.id, activeProg);
     if (!existingPlans || existingPlans.length === 0) {
-      userPlans = await seedUserPlans(user.id);
+      userPlans = await seedUserPlans(user.id, activeProg);
     } else {
       userPlans = existingPlans;
     }
@@ -76,6 +93,9 @@ export default function Dashboard() {
     setExerciseNames(names || []);
     if (names && names.length > 0) {
       setSelectedExercise(names[0]);
+    } else {
+      setSelectedExercise('');
+      setChartData([]);
     }
 
     setLoading(false);
@@ -94,6 +114,36 @@ export default function Dashboard() {
       }));
       setChartData(formatted);
     }
+  }
+
+  async function handleSaveSettings(e) {
+    e.preventDefault();
+    setSavingSettings(true);
+    setSettingsError('');
+
+    try {
+      const { error } = await upsertProfile(user.id, {
+        display_name: displayName,
+        active_program: activeProgram,
+        default_increment: defaultIncrement,
+      });
+
+      if (error) {
+        setSettingsError(error.message);
+      } else {
+        setShowSettings(false);
+        await loadData();
+      }
+    } catch (err) {
+      setSettingsError('Si è verificato un errore durante il salvataggio.');
+    } finally {
+      setSavingSettings(false);
+    }
+  }
+
+  async function handleLogout() {
+    await signOut();
+    navigate('/login');
   }
 
   // Stats
@@ -154,11 +204,29 @@ export default function Dashboard() {
   return (
     <div className="page">
       {/* Header */}
-      <div className="page-header animate-fade-in-up">
-        <p className="page-subtitle">
-          Ciao, {profile?.display_name || 'Atleta'} 👋
-        </p>
-        <h1 className="page-title">Dashboard</h1>
+      <div className="page-header animate-fade-in-up" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <p className="page-subtitle">
+            Ciao, {profile?.display_name || 'Atleta'} 👋
+          </p>
+          <h1 className="page-title">Dashboard</h1>
+        </div>
+        <button
+          onClick={() => setShowSettings(true)}
+          className="btn-ghost"
+          style={{
+            padding: 8,
+            borderRadius: '50%',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--text-secondary)',
+          }}
+          id="open-settings-btn"
+        >
+          <Settings size={22} />
+        </button>
       </div>
 
       {/* Next workout CTA */}
@@ -185,7 +253,7 @@ export default function Dashboard() {
                   opacity: 0.8,
                 }}
               >
-                Prossimo allenamento
+                Prossimo allenamento ({profile?.active_program === 'corpolibero' ? 'Corpo Libero' : 'inVictus'})
               </p>
               <p
                 style={{
@@ -352,6 +420,127 @@ export default function Dashboard() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* Settings Modal Overlay */}
+      {showSettings && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(7, 7, 13, 0.85)',
+            backdropFilter: 'blur(10px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 999,
+            padding: 16,
+          }}
+          className="animate-fade-in"
+        >
+          <div
+            style={{
+              background: 'var(--bg-surface)',
+              border: '1px solid var(--border-default)',
+              borderRadius: 'var(--radius-lg)',
+              width: '100%',
+              maxWidth: 400,
+              padding: 24,
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)',
+            }}
+            className="animate-fade-in-up"
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyBetween: 'space-between', marginBottom: 20 }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800 }}>Impostazioni Profilo</h2>
+              <button
+                onClick={() => setShowSettings(false)}
+                className="btn-ghost"
+                style={{ padding: 4, borderRadius: '50%', border: 'none', cursor: 'pointer' }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveSettings} className="stack stack-md" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <label style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                  Nome Visualizzato
+                </label>
+                <input
+                  type="text"
+                  className="input"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  placeholder="Nome"
+                  required
+                />
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <label style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                  Metodo di Allenamento Attivo
+                </label>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    type="button"
+                    className={`btn ${activeProgram === 'invictus' ? 'btn-primary' : 'btn-ghost'}`}
+                    style={{ flex: 1, fontSize: '0.75rem', padding: '10px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4 }}
+                    onClick={() => setActiveProgram('invictus')}
+                  >
+                    🏋️ inVictus
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${activeProgram === 'corpolibero' ? 'btn-primary' : 'btn-ghost'}`}
+                    style={{ flex: 1, fontSize: '0.75rem', padding: '10px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4 }}
+                    onClick={() => setActiveProgram('corpolibero')}
+                  >
+                    🧘 Corpo Libero
+                  </button>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <label style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                  Incremento Peso Default (kg)
+                </label>
+                <input
+                  type="number"
+                  step="0.5"
+                  className="input"
+                  value={defaultIncrement}
+                  onChange={(e) => setDefaultIncrement(Number(e.target.value))}
+                  required
+                />
+              </div>
+
+              {settingsError && (
+                <p style={{ color: 'var(--color-danger)', fontSize: '0.8125rem' }}>{settingsError}</p>
+              )}
+
+              <button
+                type="submit"
+                className="btn btn-primary btn-full btn-lg"
+                disabled={savingSettings}
+                style={{ marginTop: 8, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 6 }}
+              >
+                <Save size={16} /> {savingSettings ? 'Salvataggio...' : 'Salva Impostazioni'}
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-ghost btn-full"
+                onClick={handleLogout}
+                style={{ color: 'var(--color-danger)', marginTop: 8, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 6 }}
+              >
+                <LogOut size={16} /> Disconnetti
+              </button>
+            </form>
           </div>
         </div>
       )}

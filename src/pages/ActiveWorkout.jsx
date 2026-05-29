@@ -9,6 +9,7 @@ import {
   startSession,
   completeSession,
   logSet as saveSetToDb,
+  getProfile,
 } from '../lib/supabase';
 import { calculateNextProgression } from '../lib/progression';
 import { seedUserPlans, PLAN_COLORS } from '../lib/seedData';
@@ -66,9 +67,12 @@ export default function ActiveWorkout() {
 
   async function loadPlans() {
     setLoading(true);
-    const { data } = await getUserPlans(user.id);
+    const { data: profileData } = await getProfile(user.id);
+    const activeProg = profileData?.active_program || 'invictus';
+
+    const { data } = await getUserPlans(user.id, activeProg);
     if (!data || data.length === 0) {
-      const seeded = await seedUserPlans(user.id);
+      const seeded = await seedUserPlans(user.id, activeProg);
       setPlans(seeded);
     } else {
       setPlans(data);

@@ -447,27 +447,349 @@ const SCHEDA_C = {
   ],
 };
 
-export const ALL_PLANS = [SCHEDA_A, SCHEDA_B, SCHEDA_C];
+// ============================================
+// Schede Corpo Libero & Elastici (Tonificazione & Glutei Focus)
+// ============================================
+const SCHEDA_A_CORPO_LIBERO = {
+  name: 'Scheda A',
+  description: 'Gambe • Glutei • Addome (Corpo Libero)',
+  sort_order: 0,
+  exercises: [
+    {
+      exercise_name: 'Squat con elastico',
+      muscle_group: 'Gambe',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 0,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 15, max_reps: 20, weight_offset: 0, note: 'Banda elastica sopra le ginocchia' },
+          { min_reps: 15, max_reps: 20, weight_offset: 0, note: 'Banda elastica sopra le ginocchia' },
+          { min_reps: 15, max_reps: 20, weight_offset: 0, note: 'Banda elastica sopra le ginocchia' },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Hip Thrust con manubrio + elastico',
+      muscle_group: 'Gambe',
+      progression_type: null,
+      rest_seconds: 90,
+      sort_order: 1,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 12, max_reps: 15, weight_offset: 0, note: 'Usa manubrio 5kg' },
+          { min_reps: 12, max_reps: 15, weight_offset: 0, note: 'Usa manubrio 5kg' },
+          { min_reps: 12, max_reps: 15, weight_offset: 0, note: 'Usa manubrio 5kg' },
+          { min_reps: 12, max_reps: 15, weight_offset: 0, note: 'Usa manubrio 5kg' },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Affondi posteriori con manubri',
+      muscle_group: 'Gambe',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 2,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 10, max_reps: 10, weight_offset: 0, note: 'Manubri da 3kg o 5kg' },
+          { min_reps: 10, max_reps: 10, weight_offset: 0 },
+          { min_reps: 10, max_reps: 10, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Slanci posteriori con elastico',
+      muscle_group: 'Gambe',
+      progression_type: null,
+      rest_seconds: 45,
+      sort_order: 3,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 15, max_reps: 15, weight_offset: 0, note: '15 ripetizioni per gamba' },
+          { min_reps: 15, max_reps: 15, weight_offset: 0 },
+          { min_reps: 15, max_reps: 15, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Plank addominale',
+      muscle_group: 'Addome',
+      progression_type: null,
+      rest_seconds: 45,
+      sort_order: 4,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 30, max_reps: 60, weight_offset: 0, note: 'Mantieni i secondi target' },
+          { min_reps: 30, max_reps: 60, weight_offset: 0 },
+          { min_reps: 30, max_reps: 60, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Crunch a terra',
+      muscle_group: 'Addome',
+      progression_type: null,
+      rest_seconds: 45,
+      sort_order: 5,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 15, max_reps: 20, weight_offset: 0 },
+          { min_reps: 15, max_reps: 20, weight_offset: 0 },
+          { min_reps: 15, max_reps: 20, weight_offset: 0 },
+        ],
+      },
+    },
+  ],
+};
+
+const SCHEDA_B_CORPO_LIBERO = {
+  name: 'Scheda B',
+  description: 'Tono Upper Body • Spalle • Dorso • Braccia',
+  sort_order: 1,
+  exercises: [
+    {
+      exercise_name: 'Alzate laterali con manubri',
+      muscle_group: 'Spalle',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 0,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 12, max_reps: 15, weight_offset: 0, note: 'Manubri da 3kg' },
+          { min_reps: 12, max_reps: 15, weight_offset: 0 },
+          { min_reps: 12, max_reps: 15, weight_offset: 0 },
+          { min_reps: 12, max_reps: 15, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Rematore con manubri',
+      muscle_group: 'Dorso',
+      progression_type: null,
+      rest_seconds: 75,
+      sort_order: 1,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 10, max_reps: 12, weight_offset: 0, note: 'Manubri da 5kg' },
+          { min_reps: 10, max_reps: 12, weight_offset: 0 },
+          { min_reps: 10, max_reps: 12, weight_offset: 0 },
+          { min_reps: 10, max_reps: 12, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Shoulder Press con manubri',
+      muscle_group: 'Spalle',
+      progression_type: null,
+      rest_seconds: 90,
+      sort_order: 2,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 10, max_reps: 12, weight_offset: 0, note: 'Manubri da 3kg o 5kg' },
+          { min_reps: 10, max_reps: 12, weight_offset: 0 },
+          { min_reps: 10, max_reps: 12, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Superset: Curl + Kickback con manubri',
+      muscle_group: 'Braccia',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 3,
+      is_superset: true,
+      superset_exercises: ['Curl bicipiti', 'Kickback tricipiti'],
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 12, max_reps: 12, weight_offset: 0, note: 'Manubri da 3kg' },
+          { min_reps: 12, max_reps: 12, weight_offset: 0 },
+          { min_reps: 12, max_reps: 12, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Lat pull-down con elastico',
+      muscle_group: 'Dorso',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 4,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 15, max_reps: 15, weight_offset: 0, note: 'Tendi la banda tra le braccia sopra la testa' },
+          { min_reps: 15, max_reps: 15, weight_offset: 0 },
+          { min_reps: 15, max_reps: 15, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Russian Twist addominale',
+      muscle_group: 'Addome',
+      progression_type: null,
+      rest_seconds: 45,
+      sort_order: 5,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 20, max_reps: 20, weight_offset: 0, note: 'Eventualmente con manubrio 3kg' },
+          { min_reps: 20, max_reps: 20, weight_offset: 0 },
+          { min_reps: 20, max_reps: 20, weight_offset: 0 },
+        ],
+      },
+    },
+  ],
+};
+
+const SCHEDA_C_CORPO_LIBERO = {
+  name: 'Scheda C',
+  description: 'Total Body Conditioning (HIIT & Tone)',
+  sort_order: 2,
+  exercises: [
+    {
+      exercise_name: 'Goblet Squat con manubrio',
+      muscle_group: 'Gambe',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 0,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 12, max_reps: 15, weight_offset: 0, note: 'Manubrio da 5kg al petto' },
+          { min_reps: 12, max_reps: 15, weight_offset: 0 },
+          { min_reps: 12, max_reps: 15, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Piegamenti sulle ginocchia',
+      muscle_group: 'Petto',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 1,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 10, max_reps: 12, weight_offset: 0, note: 'Piegamenti facilitati' },
+          { min_reps: 10, max_reps: 12, weight_offset: 0 },
+          { min_reps: 10, max_reps: 12, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Ponte glutei singolo leg',
+      muscle_group: 'Gambe',
+      progression_type: null,
+      rest_seconds: 45,
+      sort_order: 2,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 12, max_reps: 12, weight_offset: 0, note: '12 ripetizioni per lato' },
+          { min_reps: 12, max_reps: 12, weight_offset: 0 },
+          { min_reps: 12, max_reps: 12, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Mountain Climber',
+      muscle_group: 'Addome',
+      progression_type: null,
+      rest_seconds: 45,
+      sort_order: 3,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 30, max_reps: 30, weight_offset: 0, note: '30 secondi di lavoro continuo' },
+          { min_reps: 30, max_reps: 30, weight_offset: 0 },
+          { min_reps: 30, max_reps: 30, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Alzate frontali con elastico',
+      muscle_group: 'Spalle',
+      progression_type: null,
+      rest_seconds: 60,
+      sort_order: 4,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 12, max_reps: 12, weight_offset: 0, note: 'Sotto i piedi e tira in avanti' },
+          { min_reps: 12, max_reps: 12, weight_offset: 0 },
+          { min_reps: 12, max_reps: 12, weight_offset: 0 },
+        ],
+      },
+    },
+    {
+      exercise_name: 'Bicycle Crunch',
+      muscle_group: 'Addome',
+      progression_type: null,
+      rest_seconds: 45,
+      sort_order: 5,
+      is_superset: false,
+      sets_config: {
+        type: 'fixed',
+        sets: [
+          { min_reps: 20, max_reps: 20, weight_offset: 0, note: 'Alternato destra/sinistra' },
+          { min_reps: 20, max_reps: 20, weight_offset: 0 },
+          { min_reps: 20, max_reps: 20, weight_offset: 0 },
+        ],
+      },
+    },
+  ],
+};
+
+export const INVICTUS_PLANS = [SCHEDA_A, SCHEDA_B, SCHEDA_C];
+export const CORPO_LIBERO_PLANS = [SCHEDA_A_CORPO_LIBERO, SCHEDA_B_CORPO_LIBERO, SCHEDA_C_CORPO_LIBERO];
 
 /**
- * Seeds the user's workout plans into Supabase if they don't have any.
+ * Seeds the user's workout plans into Supabase if they don't have any for the given program type.
  */
-export async function seedUserPlans(userId) {
-  // Check if user already has plans
-  const { data: existing } = await getUserPlans(userId);
+export async function seedUserPlans(userId, programType = 'invictus') {
+  // Check if user already has plans for this program type
+  const { data: existing } = await getUserPlans(userId, programType);
   if (existing && existing.length > 0) {
     return existing;
   }
 
   const plans = [];
+  const sourcePlans = programType === 'corpolibero' ? CORPO_LIBERO_PLANS : INVICTUS_PLANS;
 
-  for (const planData of ALL_PLANS) {
+  for (const planData of sourcePlans) {
     const { exercises, ...planFields } = planData;
 
     // Create the plan
     const { data: plan, error: planError } = await createPlan({
       ...planFields,
       user_id: userId,
+      program_type: programType,
     });
 
     if (planError) {

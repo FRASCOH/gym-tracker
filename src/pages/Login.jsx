@@ -6,6 +6,7 @@ export default function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [programType, setProgramType] = useState('invictus');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -15,8 +16,9 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const fn = isSignUp ? signUpWithEmail : signInWithEmail;
-      const { error: authError } = await fn(email, password);
+      const { error: authError } = isSignUp
+        ? await signUpWithEmail(email, password, { active_program: programType })
+        : await signInWithEmail(email, password);
 
       if (authError) {
         setError(authError.message);
@@ -42,7 +44,7 @@ export default function Login() {
       <div className="auth-logo">🏋️</div>
       <h1 className="auth-title text-gradient">GymTracker</h1>
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem' }}>
-        Metodo inVictus Academy
+        Scegli il tuo percorso e traccia i progressi
       </p>
 
       {/* Auth card */}
@@ -140,6 +142,32 @@ export default function Login() {
               />
             </div>
           </div>
+
+          {isSignUp && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
+              <label style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                Metodo di Allenamento
+              </label>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button
+                  type="button"
+                  className={`btn ${programType === 'invictus' ? 'btn-primary' : 'btn-ghost'}`}
+                  style={{ flex: 1, fontSize: '0.75rem', padding: '10px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4 }}
+                  onClick={() => setProgramType('invictus')}
+                >
+                  🏋️ inVictus
+                </button>
+                <button
+                  type="button"
+                  className={`btn ${programType === 'corpolibero' ? 'btn-primary' : 'btn-ghost'}`}
+                  style={{ flex: 1, fontSize: '0.75rem', padding: '10px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 4 }}
+                  onClick={() => setProgramType('corpolibero')}
+                >
+                  🧘 Corpo Libero
+                </button>
+              </div>
+            </div>
+          )}
 
           {error && (
             <div

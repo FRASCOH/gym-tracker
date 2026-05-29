@@ -117,13 +117,18 @@ CREATE POLICY "Users manage own sets" ON session_sets
 -- ============================================
 -- TRIGGER: Auto-create profile on signup
 -- ============================================
+-- Aggiunta colonne per supporto multi-programma
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS active_program TEXT DEFAULT 'invictus';
+ALTER TABLE workout_plans ADD COLUMN IF NOT EXISTS program_type TEXT DEFAULT 'invictus';
+
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, display_name)
+  INSERT INTO public.profiles (id, display_name, active_program)
   VALUES (
     NEW.id,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1))
+    COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1)),
+    COALESCE(NEW.raw_user_meta_data->>'active_program', 'invictus')
   )
   ON CONFLICT (id) DO NOTHING;
   RETURN NEW;

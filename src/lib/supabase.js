@@ -18,8 +18,14 @@ export const supabase = createClient(
 // Auth helpers
 // ============================================
 
-export async function signUpWithEmail(email, password) {
-  const { data, error } = await supabase.auth.signUp({ email, password });
+export async function signUpWithEmail(email, password, metadata = {}) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: metadata,
+    },
+  });
   return { data, error };
 }
 
@@ -69,11 +75,12 @@ export async function upsertProfile(userId, updates) {
 // Workout Plans
 // ============================================
 
-export async function getUserPlans(userId) {
+export async function getUserPlans(userId, programType = 'invictus') {
   const { data, error } = await supabase
     .from('workout_plans')
     .select('*, plan_exercises(*)')
     .eq('user_id', userId)
+    .eq('program_type', programType)
     .order('sort_order');
 
   if (data) {

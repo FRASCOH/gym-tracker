@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Play, ChevronRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { getUserPlans } from '../lib/supabase';
+import { getUserPlans, getProfile } from '../lib/supabase';
 import { seedUserPlans, MUSCLE_GROUP_COLORS, PLAN_COLORS } from '../lib/seedData';
 import { getProgressionInfo } from '../lib/progression';
 
 export default function Plans() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
   const [plans, setPlans] = useState([]);
   const [expandedPlan, setExpandedPlan] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,9 +20,15 @@ export default function Plans() {
 
   async function loadPlans() {
     setLoading(true);
-    const { data } = await getUserPlans(user.id);
+    // Fetch profile to get active_program
+    const { data: profileData } = await getProfile(user.id);
+    setProfile(profileData);
+
+    const activeProg = profileData?.active_program || 'invictus';
+
+    const { data } = await getUserPlans(user.id, activeProg);
     if (!data || data.length === 0) {
-      const seeded = await seedUserPlans(user.id);
+      const seeded = await seedUserPlans(user.id, activeProg);
       setPlans(seeded);
     } else {
       setPlans(data);
@@ -76,7 +83,11 @@ export default function Plans() {
     <div className="page">
       <div className="page-header animate-fade-in-up">
         <h1 className="page-title">Le tue Schede</h1>
-        <p className="page-subtitle">Metodo inVictus Academy</p>
+        <p className="page-subtitle">
+          {profile?.active_program === 'corpolibero'
+            ? 'Corpo Libero & Elastici'
+            : 'Metodo inVictus Academy'}
+        </p>
       </div>
 
       <div className="stack stack-lg stagger-children">
