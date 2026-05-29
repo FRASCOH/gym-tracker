@@ -70,13 +70,12 @@ export default function ActiveWorkout() {
     const { data: profileData } = await getProfile(user.id);
     const activeProg = profileData?.active_program || 'invictus';
 
+    // Seed/check plans (idempotent)
+    await seedUserPlans(user.id, activeProg);
+
+    // Retrieve plans
     const { data } = await getUserPlans(user.id, activeProg);
-    if (!data || data.length === 0) {
-      const seeded = await seedUserPlans(user.id, activeProg);
-      setPlans(seeded);
-    } else {
-      setPlans(data);
-    }
+    setPlans(data || []);
     setLoading(false);
   }
 

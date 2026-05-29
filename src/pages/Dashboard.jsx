@@ -64,15 +64,12 @@ export default function Dashboard() {
 
     const activeProg = profileData?.active_program || 'invictus';
 
-    // Seed plans if needed
-    let userPlans = [];
-    const { data: existingPlans } = await getUserPlans(user.id, activeProg);
-    if (!existingPlans || existingPlans.length === 0) {
-      userPlans = await seedUserPlans(user.id, activeProg);
-    } else {
-      userPlans = existingPlans;
-    }
-    setPlans(userPlans);
+    // Seed plans if needed (idempotent)
+    await seedUserPlans(user.id, activeProg);
+
+    // Retrieve plans
+    const { data: userPlans } = await getUserPlans(user.id, activeProg);
+    setPlans(userPlans || []);
 
     // Load sessions
     const { data: sessionsData } = await getUserSessions(user.id, 10);

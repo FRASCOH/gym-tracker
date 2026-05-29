@@ -26,13 +26,12 @@ export default function Plans() {
 
     const activeProg = profileData?.active_program || 'invictus';
 
+    // Seed or check missing plans (idempotent)
+    await seedUserPlans(user.id, activeProg);
+
+    // Load plans from DB
     const { data } = await getUserPlans(user.id, activeProg);
-    if (!data || data.length === 0) {
-      const seeded = await seedUserPlans(user.id, activeProg);
-      setPlans(seeded);
-    } else {
-      setPlans(data);
-    }
+    setPlans(data || []);
     setLoading(false);
   }
 
