@@ -53,7 +53,6 @@ export default function SetRow({
 
       {/* Weight input */}
       <div className="set-input-group">
-        <label className="set-input-label">KG</label>
         <input
           type="number"
           className="set-input input-mono"
@@ -65,14 +64,15 @@ export default function SetRow({
           inputMode="decimal"
           disabled={isCompleted}
         />
-        {targetWeight > 0 && (
+        {targetWeight > 0 ? (
           <span className="target-indicator">target: {targetWeight}</span>
+        ) : (
+          <span className="target-indicator" style={{ visibility: 'hidden' }}>—</span>
         )}
       </div>
 
       {/* Reps input */}
       <div className="set-input-group">
-        <label className="set-input-label">REPS</label>
         <input
           type="number"
           className={`set-input input-mono ${getRepsClass()}`}
