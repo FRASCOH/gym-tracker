@@ -113,9 +113,9 @@ export default function Plans() {
                         WebkitTextFillColor: 'transparent',
                       }}
                     >
-                      {plan.name.replace('Scheda ', '')}
+                      {plan.name.replace('Scheda ', '').replace(/\s*\(.*\)/, '')}
                     </div>
-                    <div style={{ fontSize: '1.125rem', fontWeight: 700 }}>{plan.name}</div>
+                    <div style={{ fontSize: '1.125rem', fontWeight: 700 }}>{plan.name.replace(/\s*\(.*\)/, '')}</div>
                     <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 2 }}>
                       {plan.description}
                     </div>
@@ -231,7 +231,7 @@ export default function Plans() {
                     style={{ marginTop: 8 }}
                   >
                     <Play size={18} />
-                    Inizia {plan.name}
+                    Inizia {plan.name.replace(/\s*\(.*\)/, '')}
                   </button>
                 </div>
               )}

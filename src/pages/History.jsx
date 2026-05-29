@@ -99,7 +99,7 @@ export default function History() {
                     {planColor?.emoji || '🏋️'}
                   </div>
                   <div className="history-details">
-                    <div className="history-plan-name">{planName}</div>
+                    <div className="history-plan-name">{planName.replace(/\s*\(.*\)/, '')}</div>
                     <div className="history-date" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                       <Calendar size={12} />
                       {new Date(session.started_at).toLocaleDateString('it-IT', {
